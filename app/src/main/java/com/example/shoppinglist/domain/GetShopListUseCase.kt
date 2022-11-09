@@ -1,7 +1,9 @@
 package com.example.shoppinglist.domain
 
-data class GetShopListUseCase(
+import java.util.function.ToDoubleBiFunction
+
+class GetShopListUseCase(private val shopListRepository: ShopListRepository) {
     fun getShopList(): List<ShopItem> {
-        TODO()
+        return shopListRepository.getShopList()
     }
-)
+}
