@@ -11,6 +11,7 @@ import com.example.shoppinglist.domain.ShopItem
 import java.lang.Exception
 
 class ShopItemViewModel : ViewModel() {
+
     private val repository = ShopListRepositoryImpl
 
     private val getShopItemUseCase = GetShopItemUseCase(repository)
@@ -90,11 +91,11 @@ class ShopItemViewModel : ViewModel() {
         return result
     }
 
-    private fun resetErrorInputName() {
+     fun resetErrorInputName() {
         _errorInputName.value = false
     }
 
-    private fun resetErrorInputCount() {
+     fun resetErrorInputCount() {
         _errorInputCount.value = false
     }
 
