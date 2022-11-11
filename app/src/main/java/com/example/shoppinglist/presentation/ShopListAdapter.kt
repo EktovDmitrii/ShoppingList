@@ -1,6 +1,7 @@
 package com.example.shoppinglist.presentation
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import java.lang.RuntimeException
 
 class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>() {
 
+   var count = 0
     var shopList = listOf<ShopItem>()
         set(value) {
             field = value
@@ -21,11 +23,13 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShopItemViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(
-                R.layout.item_shop_enabled,
-                parent,
-                false
-            )
+        Log.d("ShopListAdapter", "onCreateViewHolder, count: ${++count}")
+        val layout = when(viewType) {
+            VIEW_TYPE_DISABLE ->R.layout.item_shop_disabled
+            VIEW_TYPE_ENABLE ->R.layout.item_shop_enabled
+else -> throw RuntimeException("Unknown ViewType $viewType ")
+        }
+        val view = LayoutInflater.from(parent.context).inflate(layout, parent, false)
         return ShopItemViewHolder(view)
     }
 
@@ -40,8 +44,26 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>
         }
     }
 
+    override fun onViewRecycled(viewHolder: ShopItemViewHolder) {
+        super.onViewRecycled(viewHolder)
+    viewHolder.tvName.text = ""
+        viewHolder.tvCount.text = ""
+        viewHolder.tvName.setTextColor(ContextCompat.getColor(viewHolder.view.context, android.R.color.white))
+
+
+    }
+
     override fun getItemCount(): Int {
         return shopList.size
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        val item = shopList[position]
+        return if(item.enable){
+            VIEW_TYPE_ENABLE
+        } else {
+            VIEW_TYPE_DISABLE
+        }
     }
 
     class ShopItemViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
