@@ -34,7 +34,10 @@ class ShopItemActivity : AppCompatActivity() {
 //        viewModel = ViewModelProvider(this)[ShopItemViewModel::class.java]
 //        initViews()
 //        addTextChangeListeners()
+
+    if (savedInstanceState == null){
         launchRightMode()
+    }
 //        observeViewModel()
 
 
@@ -72,7 +75,7 @@ class ShopItemActivity : AppCompatActivity() {
         }
     // запускаем транзакцию (фрагмент)
     supportFragmentManager.beginTransaction()
-        .add(R.id.shop_item_container, fragment)
+        .replace(R.id.shop_item_container, fragment)
         .commit()
     }
 //
