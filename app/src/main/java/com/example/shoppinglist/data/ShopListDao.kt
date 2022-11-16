@@ -11,7 +11,7 @@ import androidx.room.Query
 interface ShopListDao {
 
     @Query("SELECT * FROM shop_items")
-    fun fetShopList(): LiveData<List<ShopItemDbModel>>
+    fun getShopList(): LiveData<List<ShopItemDbModel>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE )
     fun addShopItem(shopItemDbModel: ShopItemDbModel)
