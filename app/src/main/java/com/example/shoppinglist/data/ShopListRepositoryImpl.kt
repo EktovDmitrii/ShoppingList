@@ -13,23 +13,23 @@ class ShopListRepositoryImpl(application: Application) : ShopListRepository {
     private val mapper = ShopListMapper()
 
 
-    override fun addShopItem(shopItem: ShopItem) {
+    override suspend fun addShopItem(shopItem: ShopItem) {
         shopListDao.addShopItem(mapper.mapEntityToDbModel(shopItem))
     }
 
-    override fun editShopItem(shopItem: ShopItem) {
+    override suspend fun editShopItem(shopItem: ShopItem) {
         shopListDao.addShopItem(mapper.mapEntityToDbModel(shopItem))
 
     }
 
-    override fun getShopItem(shopItemId: Int): ShopItem {
+    override suspend fun getShopItem(shopItemId: Int): ShopItem {
         val dbModel = shopListDao.getShopItem(shopItemId)
         return mapper.mapDbModelToEntity(dbModel)
     }
 //Медиатор лайв дата, посзволяет перехватить лайв дату и сделать с ней какие-то операции:
     //задать условия, поменять значение, или тип данных, если нам необходимо только
     //сделать преобразование, то вызываем метод map из Transformations класса.
-//    override fun getShopList(): LiveData<List<ShopItem>> = MediatorLiveData<List<ShopItem>>().apply {
+//    override suspend fun getShopList(): LiveData<List<ShopItem>> = MediatorLiveData<List<ShopItem>>().apply {
 //        addSource(shopListDao.getShopList()) {
 //           value = mapper.mapListDbModelToListEntity(it)
 //            }
@@ -41,7 +41,7 @@ class ShopListRepositoryImpl(application: Application) : ShopListRepository {
         mapper.mapListDbModelToListEntity(it)
     }
 
-    override fun removeShopItem(shopItem: ShopItem) {
-        shopListDao.deleteShopItem(shopItem.id)
+    override suspend fun removeShopItem(shopItem: ShopItem) {
+        shopListDao.removeShopItem(shopItem.id)
     }
 }
